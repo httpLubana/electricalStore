@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 15,
-    color: "#ff4f8b",
+    color: "#4f8bff",
     fontWeight: "bold",
   },
 });

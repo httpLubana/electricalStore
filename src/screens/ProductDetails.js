@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 
   image: { width: 200, height: 200, resizeMode: "contain", marginBottom: 20 },
   name: { fontSize: 24, fontWeight: "bold" },
-  price: { fontSize: 22, color: "#ff4f8b", marginVertical: 10 },
+  price: { fontSize: 22, color: "#4f8bff", marginVertical: 10 },
   desc: { fontSize: 16, textAlign: "center", color: "#555", marginBottom: 20 },
 
   button: {

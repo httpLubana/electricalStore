@@ -5,7 +5,7 @@ export const PRODUCTS = [
     price: 3500,
     description: "Apple kablosuz kulaklık.",
     image: require("../../assets/airpod.png"),
-    category: "Kulaklık"
+    category: "Kulaklık",
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export const PRODUCTS = [
     price: 8000,
     description: "Profesyonel fotoğraf makinesi.",
     image: require("../../assets/camera.png"),
-    category: "Kamera"
+    category: "Kamera",
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ export const PRODUCTS = [
     price: 2000,
     description: "Yüksek ses kalitesine sahip hoparlör.",
     image: require("../../assets/class.png"),
-    category: "Ses"
+    category: "Ses",
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ export const PRODUCTS = [
     price: 1500,
     description: "Oyuncu kulaklığı.",
     image: require("../../assets/headset.png"),
-    category: "Kulaklık"
+    category: "Kulaklık",
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ export const PRODUCTS = [
     price: 12000,
     description: "Premium akıllı telefon.",
     image: require("../../assets/mobile.png"),
-    category: "Telefon"
+    category: "Telefon",
   },
   {
     id: 6,
@@ -45,6 +45,6 @@ export const PRODUCTS = [
     price: 1800,
     description: "Taşınabilir Bluetooth hoparlör.",
     image: require("../../assets/speaker.png"),
-    category: "Ses"
-  }
+    category: "Ses",
+  },
 ];

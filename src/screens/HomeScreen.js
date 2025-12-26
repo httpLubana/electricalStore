@@ -1,51 +1,95 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MainButton from "../components/MainButton";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Electrical Store</Text>
+    <ImageBackground
+      source={require("../../assets/home-bg.jpg")}
+      style={styles.bg}
+      resizeMode="cover"
+    >
+      {/* Overlay */}
+      <View style={styles.overlay}>
+        <SafeAreaView style={styles.container}>
+          
+          {/* Header */}
+          <View style={styles.header}>
+            <Text style={styles.title}>⚡ Electrical Store</Text>
+            <Text style={styles.subtitle}>
+              Elektroniğin en güvenilir adresi
+            </Text>
+          </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Products")}
-      >
-        <Text style={styles.buttonText}>Ürünlere Git</Text>
-      </TouchableOpacity>
+          {/* Buttons */}
+          <View style={styles.buttons}>
+            <MainButton
+              title=" Ürünlere Git"
+              onPress={() => navigation.navigate("Products")}
+            />
+            <MainButton
+              title=" Sepetim"
+              onPress={() => navigation.navigate("Cart")}
+            />
+            <MainButton
+              title=" Favorilerim"
+              onPress={() => navigation.navigate("Favorites")}
+            />
+          </View>
 
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "#4f8bff" }]}
-        onPress={() => navigation.navigate("Cart")}
-      >
-        <Text style={styles.buttonText}>Sepetim 🛒</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: "#4f8bff" }]}
-        onPress={() => navigation.navigate("Favorites")}
-      >
-        <Text style={styles.buttonText}>Favorilerim </Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+        </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { 
+  bg: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+  },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.30)", 
+  },
+
+  container: {
+    flex: 1,
+    paddingHorizontal:40,
+  },
+
+ header: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: 200,   
+},
+
+
+  title: {
+    fontSize: 34,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 8,
+  },
+
+subtitleBox: {
+  backgroundColor: "rgba(255,255,255,0.15)",
+  paddingHorizontal: 16,
+  paddingVertical: 6,
+  borderRadius: 20,
+  marginTop: 8,
+},
+
+subtitle: {
+  fontSize: 15,
+  color: "#fff",
+},
+
+
+
+  buttons: {
+    flex: 1,
     justifyContent: "center",
-    paddingTop: 10,
   },
-  title: { fontSize: 32, fontWeight: "bold", marginBottom: 20 },
-  button: {
-    backgroundColor: "#4f8bff",
-    padding: 15,
-    borderRadius: 10,
-    width: 200,
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
 });

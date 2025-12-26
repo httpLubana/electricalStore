@@ -11,6 +11,7 @@ export default function ProductsScreen({ navigation }) {
       <FlatList
         data={PRODUCTS}
         numColumns={2}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         renderItem={({ item }) => (
@@ -33,46 +34,53 @@ export default function ProductsScreen({ navigation }) {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     padding: 15,
-    paddingTop: 20,
   },
+
   header: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 15,
-    color: "#333",
+    marginBottom: 20,
+    color: "#2d2d2d",
   },
+
   card: {
-    backgroundColor: "#f3f3f3",
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 15,
     width: "48%",
+    backgroundColor: "#f7f7f7",
+    borderRadius: 14,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    marginBottom: 18,
     alignItems: "center",
+
+    // Gölge (iOS + Android)
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 4,
   },
+
   image: {
-    width: 100,
-    height: 100,
-    marginBottom: 10,
+    width: 120,
+    height: 120,
     resizeMode: "contain",
+    marginBottom: 12,
   },
+
   name: {
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
-    marginBottom: 6,
+    marginBottom: 5,
   },
+
   price: {
-    fontSize: 15,
+    fontSize: 16,
     color: "#4f8bff",
     fontWeight: "bold",
   },

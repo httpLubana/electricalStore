@@ -6,9 +6,9 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   const addToCart = (product) => {
-    const existing = cart.find((item) => item.id === product.id);
+    const exists = cart.find((item) => item.id === product.id);
 
-    if (existing) {
+    if (exists) {
       setCart(
         cart.map((item) =>
           item.id === product.id
@@ -22,32 +22,30 @@ export function CartProvider({ children }) {
   };
 
   const decreaseQuantity = (id) => {
-    const existing = cart.find((item) => item.id === id);
-
-    if (!existing) return;
-
-    if (existing.quantity > 1) {
-      setCart(
-        cart.map((item) =>
+    setCart(
+      cart
+        .map((item) =>
           item.id === id
-            ? { ...item, quantity: item.quantity - 1 }
+            ? { ...item, quantity: Math.max(1, item.quantity - 1) }
             : item
         )
-      );
-    } else {
-      setCart(cart.filter((item) => item.id !== id));
-    }
+        .filter((item) => item.quantity > 0)
+    );
   };
 
   const removeFromCart = (id) => {
     setCart(cart.filter((item) => item.id !== id));
   };
 
-  // toplam fiyat
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+
+  // ✅ BURASI ÇOK ÖNEMLİ — clearCart FONKSİYONUNU EKLEDİK
+  const clearCart = () => {
+    setCart([]);
+  };
 
   return (
     <CartContext.Provider
@@ -57,6 +55,7 @@ export function CartProvider({ children }) {
         decreaseQuantity,
         removeFromCart,
         totalPrice,
+        clearCart, // ✔ dışarı veriyoruz
       }}
     >
       {children}

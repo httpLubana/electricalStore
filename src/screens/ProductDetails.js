@@ -1,25 +1,23 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, ToastAndroid } from "react-native";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
-import { FavContext } from "../context/FavContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MainButton from "../components/MainButton";
+import { FavContext } from "../context/FavContext";
+import { useContext } from "react";
+import { addToCart } from "../storage/cartStorage";
 
 export default function ProductDetails({ route }) {
   const { product } = route.params;
-  const { addToCart } = useContext(CartContext);
   const { favorites, toggleFavorite } = useContext(FavContext);
 
-  const handleAddToCart = () => {
-    addToCart(product);
+  const handleAddToCart = async () => {
+    await addToCart(product);
     ToastAndroid.show("Ürün sepete eklendi 🛒", ToastAndroid.SHORT);
   };
 
-  const isFav = favorites.find((i) => i.id === product.id);
+  const isFav = favorites.some((i) => i.id === product.id);
 
   return (
     <SafeAreaView style={styles.container}>
-
-      {/* ❤️ Favori butonu */}
       <TouchableOpacity
         style={styles.favBtn}
         onPress={() => toggleFavorite(product)}
@@ -35,10 +33,7 @@ export default function ProductDetails({ route }) {
       <Text style={styles.price}>{product.price} TL</Text>
       <Text style={styles.desc}>{product.description}</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleAddToCart}>
-        <Text style={styles.buttonText}>Sepete Ekle 🛒</Text>
-      </TouchableOpacity>
-
+      <MainButton title="Sepete Ekle 🛒" onPress={handleAddToCart} />
     </SafeAreaView>
   );
 }
@@ -54,18 +49,17 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
-  image: { width: 200, height: 200, resizeMode: "contain", marginBottom: 20 },
-  name: { fontSize: 24, fontWeight: "bold" },
-  price: { fontSize: 22, color: "#4f8bff", marginVertical: 10 },
-  desc: { fontSize: 16, textAlign: "center", color: "#555", marginBottom: 20 },
+  image: { width: 220, height: 220, resizeMode: "contain", marginBottom: 20 },
 
-  button: {
-    backgroundColor: "#4f8bff",
-    padding: 15,
-    borderRadius: 10,
-    width: 200,
-    alignItems: "center",
+  name: { fontSize: 26, fontWeight: "bold", marginBottom: 5 },
+
+  price: { fontSize: 22, color: "#4f8bff", marginBottom: 10 },
+
+  desc: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#555",
+    marginBottom: 25,
+    paddingHorizontal: 10,
   },
-
-  buttonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 });

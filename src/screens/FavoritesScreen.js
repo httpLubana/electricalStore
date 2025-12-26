@@ -1,47 +1,47 @@
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useContext } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { FavContext } from "../context/FavContext";
 
 export default function FavoritesScreen({ navigation }) {
   const { favorites, toggleFavorite } = useContext(FavContext);
 
   return (
-    <View style={styles.container}>
-        <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Favorilerim ❤️</Text>
 
       {favorites.length === 0 && (
         <Text style={styles.empty}>Henüz favori ürün yok 🤍</Text>
       )}
 
-     <FlatList
-  data={favorites}
-  numColumns={2}
-  keyExtractor={(item) => item.id.toString()}
-  columnWrapperStyle={{ justifyContent: "space-between" }}
-  renderItem={({ item }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => navigation.navigate("Details", { product: item })}
-    >
-      <TouchableOpacity
-        style={styles.favBtn}
-        onPress={(e) => {
-          e.stopPropagation();   // ❗ Çok önemli!
-          toggleFavorite(item);
-        }}
-      >
-        <Text style={{ fontSize: 26 }}>❤️</Text>
-      </TouchableOpacity>
+      <FlatList
+        data={favorites}
+        numColumns={2}
+        keyExtractor={(item) => item.id.toString()}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate("Details", { product: item })}
+          >
+            {/* ❤️ Favori butonu */}
+            <TouchableOpacity
+              style={styles.favBtn}
+              onPress={(e) => {
+                e.stopPropagation(); 
+                toggleFavorite(item);
+              }}
+            >
+              <Text style={{ fontSize: 26 }}>❤️</Text>
+            </TouchableOpacity>
 
-      <Image source={item.image} style={styles.image} />
-      <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
-      <Text style={styles.price}>{item.price} TL</Text>
-    </TouchableOpacity>
-  )}
-/>
-</SafeAreaView>
-    </View>
+            <Image source={item.image} style={styles.image} />
+            <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
+            <Text style={styles.price}>{item.price} TL</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </SafeAreaView>
   );
 }
 

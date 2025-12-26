@@ -1,7 +1,6 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PRODUCTS } from "../data/products";
-
+import { PRODUCTS } from "../data/products"
 export default function ProductsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
@@ -50,14 +49,14 @@ const styles = StyleSheet.create({
 
   card: {
     width: "48%",
-    backgroundColor: "#f7f7f7",
+    backgroundColor: "#a5a3a3ff",
     borderRadius: 14,
     paddingVertical: 15,
     paddingHorizontal: 10,
     marginBottom: 18,
     alignItems: "center",
 
-    // Gölge (iOS + Android)
+  
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 6,

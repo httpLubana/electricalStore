@@ -1,30 +1,27 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CART_KEY = "@cart_items";
+const CART_KEY = "@cart";
 
-// جلب السلة
 export const getCart = async () => {
-  const json = await AsyncStorage.getItem(CART_KEY);
-  return json ? JSON.parse(json) : [];
+  const data = await AsyncStorage.getItem(CART_KEY);
+  return data ? JSON.parse(data) : [];
 };
 
-// حفظ السلة
-const saveCart = async (cart) => {
+export const saveCart = async (cart) => {
   await AsyncStorage.setItem(CART_KEY, JSON.stringify(cart));
 };
 
-// إضافة / زيادة منتج
 export const addToCart = async (product) => {
   const cart = await getCart();
-  const existing = cart.find((i) => i.id === product.id);
+  const exists = cart.find((item) => item.id === product.id);
 
   let updatedCart;
 
-  if (existing) {
-    updatedCart = cart.map((i) =>
-      i.id === product.id
-        ? { ...i, quantity: i.quantity + 1 }
-        : i
+  if (exists) {
+    updatedCart = cart.map((item) =>
+      item.id === product.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
     );
   } else {
     updatedCart = [...cart, { ...product, quantity: 1 }];
@@ -33,29 +30,25 @@ export const addToCart = async (product) => {
   await saveCart(updatedCart);
 };
 
-// إنقاص الكمية
 export const decreaseQuantity = async (id) => {
   const cart = await getCart();
-  const item = cart.find((i) => i.id === id);
 
-  let updatedCart;
-
-  if (item.quantity === 1) {
-    updatedCart = cart.filter((i) => i.id !== id);
-  } else {
-    updatedCart = cart.map((i) =>
-      i.id === id
-        ? { ...i, quantity: i.quantity - 1 }
-        : i
-    );
-  }
+  const updatedCart = cart
+    .map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    )
+    .filter((item) => item.quantity > 0);
 
   await saveCart(updatedCart);
 };
 
-// حذف منتج
 export const removeFromCart = async (id) => {
   const cart = await getCart();
-  const updatedCart = cart.filter((i) => i.id !== id);
-  await saveCart(updatedCart);
+  await saveCart(cart.filter((item) => item.id !== id));
+};
+
+export const clearCart = async () => {
+  await AsyncStorage.removeItem(CART_KEY);
 };

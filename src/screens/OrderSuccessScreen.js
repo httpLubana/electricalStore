@@ -17,7 +17,7 @@ export default function OrderSuccessScreen({ route, navigation }) {
 
       <Text style={styles.text}>Toplam Tutar: {total} TL</Text>
 
-      {/* ⭐ MainButton ile modern dönüş butonu */}
+      {}
       <MainButton
         title="Ana Sayfaya Dön"
         onPress={() => navigation.navigate("Home")}

@@ -1,19 +1,8 @@
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  getCart,
-  addToCart,
-  decreaseQuantity,
-  removeFromCart,
-} from "../storage/cartStorage";
+import { getCart, addToCart, decreaseQuantity, removeFromCart } from "../storage/cartStorage";
 import MainButton from "../components/MainButton";
 
 export default function CartScreen({ navigation }) {
@@ -24,22 +13,14 @@ export default function CartScreen({ navigation }) {
     setCart(data);
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      loadCart();
-    }, [])
-  );
+  useFocusEffect(useCallback(() => { loadCart(); }, []));
 
   if (cart.length === 0) {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.header}>Sepetim 🛒</Text>
         <Text style={styles.empty}>Sepet boş</Text>
-
-        <MainButton
-          title="Ürünlere Git"
-          onPress={() => navigation.navigate("Products")}
-        />
+        <MainButton title="Ürünlere Git" onPress={() => navigation.navigate("Products")} />
       </SafeAreaView>
     );
   }
@@ -58,19 +39,13 @@ export default function CartScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <View>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.price}>{item.price} TL</Text>
-            </View>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.price}>{item.price} TL</Text>
 
-            {/* كمية */}
             <View style={styles.qtyRow}>
               <TouchableOpacity
                 style={styles.qtyBtn}
-                onPress={async () => {
-                  await decreaseQuantity(item.id);
-                  loadCart();
-                }}
+                onPress={async () => { await decreaseQuantity(item.id); loadCart(); }}
               >
                 <Text style={styles.qtyText}>-</Text>
               </TouchableOpacity>
@@ -79,22 +54,15 @@ export default function CartScreen({ navigation }) {
 
               <TouchableOpacity
                 style={styles.qtyBtn}
-                onPress={async () => {
-                  await addToCart(item);
-                  loadCart();
-                }}
+                onPress={async () => { await addToCart(item); loadCart(); }}
               >
                 <Text style={styles.qtyText}>+</Text>
               </TouchableOpacity>
             </View>
 
-            {/* حذف */}
             <TouchableOpacity
               style={styles.deleteBtn}
-              onPress={async () => {
-                await removeFromCart(item.id);
-                loadCart();
-              }}
+              onPress={async () => { await removeFromCart(item.id); loadCart(); }}
             >
               <Text style={styles.deleteText}>Sil</Text>
             </TouchableOpacity>
@@ -106,10 +74,7 @@ export default function CartScreen({ navigation }) {
         <Text style={styles.totalText}>Toplam: {totalPrice} TL</Text>
       </View>
 
-      <MainButton
-        title="Satın Al"
-        onPress={() => navigation.navigate("Checkout")}
-      />
+      <MainButton title="Satın Al" onPress={() => navigation.navigate("Checkout")} />
     </SafeAreaView>
   );
 }
@@ -117,56 +82,16 @@ export default function CartScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#fff" },
   header: { fontSize: 28, fontWeight: "bold", marginBottom: 15 },
-  empty: { fontSize: 18, marginTop: 40, textAlign: "center", color: "#999" },
-
-  item: {
-    backgroundColor: "#f3f3f3",
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 15,
-  },
-
+  empty: { fontSize: 18, textAlign: "center", color: "#999" },
+  item: { backgroundColor: "#f3f3f3", padding: 15, borderRadius: 12, marginBottom: 15 },
   name: { fontSize: 18, fontWeight: "bold" },
-  price: { marginTop: 4, color: "#4f8bff" },
-
-  qtyRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-  },
-
-  qtyBtn: {
-    backgroundColor: "#ddd",
-    padding: 8,
-    borderRadius: 6,
-    marginHorizontal: 5,
-  },
-
+  price: { color: "#4f8bff" },
+  qtyRow: { flexDirection: "row", alignItems: "center", marginTop: 10 },
+  qtyBtn: { backgroundColor: "#ddd", padding: 8, borderRadius: 6 },
   qtyText: { fontSize: 18, fontWeight: "bold" },
-  quantity: { fontSize: 18, fontWeight: "bold" },
-
-  deleteBtn: {
-    marginTop: 10,
-    backgroundColor: "#ff4f4f",
-    padding: 10,
-    borderRadius: 8,
-    width: 80,
-    alignItems: "center",
-  },
-
-  deleteText: { color: "#fff", fontWeight: "bold" },
-
-  totalBox: {
-    backgroundColor: "#4f8bff",
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 15,
-  },
-
-  totalText: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
+  quantity: { marginHorizontal: 10, fontSize: 18 },
+  deleteBtn: { marginTop: 10, backgroundColor: "#ff4f4f", padding: 10, borderRadius: 8 },
+  deleteText: { color: "#fff", textAlign: "center" },
+  totalBox: { backgroundColor: "#4f8bff", padding: 15, borderRadius: 12 },
+  totalText: { color: "#fff", fontSize: 20, textAlign: "center" },
 });

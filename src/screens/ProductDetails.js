@@ -1,12 +1,16 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, ToastAndroid } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useContext } from "react";
+
 import MainButton from "../components/MainButton";
 import { FavContext } from "../context/FavContext";
-import { useContext } from "react";
-import { addToCart } from "../storage/cartStorage";
+import { CartContext } from "../context/CartContext";
 
 export default function ProductDetails({ route }) {
   const { product } = route.params;
+
+  // ✅ useContext داخل الكمبوننت فقط
+  const { addToCart } = useContext(CartContext);
   const { favorites, toggleFavorite } = useContext(FavContext);
 
   const handleAddToCart = async () => {
@@ -22,13 +26,10 @@ export default function ProductDetails({ route }) {
         style={styles.favBtn}
         onPress={() => toggleFavorite(product)}
       >
-        <Text style={{ fontSize: 30 }}>
-          {isFav ? "❤️" : "🤍"}
-        </Text>
+        <Text style={{ fontSize: 30 }}>{isFav ? "❤️" : "🤍"}</Text>
       </TouchableOpacity>
 
       <Image source={product.image} style={styles.image} />
-
       <Text style={styles.name}>{product.name}</Text>
       <Text style={styles.price}>{product.price} TL</Text>
       <Text style={styles.desc}>{product.description}</Text>
@@ -39,27 +40,35 @@ export default function ProductDetails({ route }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, alignItems: "center", backgroundColor: "#fff" },
-
+  container: {
+    flex: 1,
+    padding: 20,
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
   favBtn: {
     position: "absolute",
     top: 25,
     right: 25,
-    zIndex: 20,
-    padding: 5,
   },
-
-  image: { width: 220, height: 220, resizeMode: "contain", marginBottom: 20 },
-
-  name: { fontSize: 26, fontWeight: "bold", marginBottom: 5 },
-
-  price: { fontSize: 22, color: "#4f8bff", marginBottom: 10 },
-
+  image: {
+    width: 220,
+    height: 220,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
+  name: {
+    fontSize: 26,
+    fontWeight: "bold",
+  },
+  price: {
+    fontSize: 22,
+    color: "#4f8bff",
+    marginBottom: 10,
+  },
   desc: {
     fontSize: 16,
     textAlign: "center",
     color: "#555",
-    marginBottom: 25,
-    paddingHorizontal: 10,
   },
 });

@@ -2,13 +2,14 @@ import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react
 import { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FavContext } from "../context/FavContext";
+import MainButton from "../components/MainButton";
 
 export default function FavoritesScreen({ navigation }) {
-  const { favorites, toggleFavorite } = useContext(FavContext);
+  const { favorites, toggleFavorite, clearFavorites } = useContext(FavContext);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Favorilerim ❤️</Text>
+      <Text style={styles.header}>Favorilerim </Text>
 
       {favorites.length === 0 && (
         <Text style={styles.empty}>Henüz favori ürün yok 🤍</Text>
@@ -24,11 +25,11 @@ export default function FavoritesScreen({ navigation }) {
             style={styles.card}
             onPress={() => navigation.navigate("Details", { product: item })}
           >
-            {/* ❤️ Favori butonu */}
+            {}
             <TouchableOpacity
               style={styles.favBtn}
               onPress={(e) => {
-                e.stopPropagation(); 
+                e.stopPropagation();
                 toggleFavorite(item);
               }}
             >
@@ -41,12 +42,26 @@ export default function FavoritesScreen({ navigation }) {
           </TouchableOpacity>
         )}
       />
+
+      {}
+      {favorites.length > 0 && (
+        <MainButton
+          title="Favorileri Temizle"
+          onPress={clearFavorites}
+        />
+      )}
+
+      {}
+      <MainButton
+        title="Ürünlere Git"
+        onPress={() => navigation.navigate("Products")}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 15, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 15, backgroundColor: "#c2c2c2ff" },
   header: { fontSize: 28, fontWeight: "bold", marginBottom: 15 },
   empty: { fontSize: 18, textAlign: "center", marginTop: 40, color: "#777" },
 

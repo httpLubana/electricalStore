@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 12,
 
-    // ⭐ Modern Shadow
+ 
     shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowRadius: 6,

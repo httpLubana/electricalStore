@@ -9,7 +9,6 @@ import { CartContext } from "../context/CartContext";
 export default function ProductDetails({ route }) {
   const { product } = route.params;
 
-  // ✅ useContext داخل الكمبوننت فقط
   const { addToCart } = useContext(CartContext);
   const { favorites, toggleFavorite } = useContext(FavContext);
 
